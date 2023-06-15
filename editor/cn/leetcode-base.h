@@ -43,4 +43,12 @@ void printVec(vector<T> vec) {
     cout << endl;
 }
 
+/*
+    ListNode l5(5, nullptr);
+    ListNode l4(4, &l5);
+    ListNode l3(3, &l4);
+    ListNode l2(2, &l3);
+    ListNode l1(1, &l2);
+ */
+
 #endif //LEETCODE_LEETCODE_BASE_H

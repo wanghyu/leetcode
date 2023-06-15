@@ -51,7 +51,24 @@
 class Solution {
 public:
     ListNode* swapPairs(ListNode* head) {
+        ListNode* dummy = new ListNode;
+        dummy->next = head;
 
+        ListNode* cur = dummy;
+        ListNode* tmp1 = nullptr;
+        ListNode* tmp2 = nullptr;
+        while(cur->next && cur->next->next) {
+            tmp1 = cur->next;
+            tmp2 = cur->next->next->next;
+
+            cur->next =  tmp1->next;
+            tmp1->next->next = tmp1;
+            tmp1->next = tmp2;
+
+            cur = tmp1;
+        }
+
+        return dummy->next;
     }
 };
 //leetcode submit region end(Prohibit modification and deletion)
@@ -59,6 +76,13 @@ public:
 
 int main(){
     [[maybe_unused]] Solution s;
-    
+    ListNode l5(5, nullptr);
+    ListNode l4(4, &l5);
+    ListNode l3(3, &l4);
+    ListNode l2(2, &l3);
+    ListNode l1(1, &l2);
+
+    auto head = s.swapPairs(&l1);
+    printList(head);
     return 0;
 }

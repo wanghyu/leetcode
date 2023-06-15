@@ -27,12 +27,7 @@
 // Related Topics 链表 双指针 👍 933 👎 0
 
 
-#include<bits/stdc++.h>
-#include <iostream>
-#include <string>
-#include <vector>
-#include <unordered_map>
-#include <map>
+#include "leetcode-base.h"
 using namespace std;
 //leetcode submit region begin(Prohibit modification and deletion)
 /**
@@ -76,6 +71,12 @@ public:
 
 int main(){
     [[maybe_unused]] Solution s;
-    
+
+    ListNode l5(5, nullptr);
+    ListNode l4(4, &l5);
+    ListNode l3(3, &l4);
+    ListNode l2(2, &l3);
+    ListNode l1(1, &l2);
+
     return 0;
 }
