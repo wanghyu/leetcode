@@ -1,0 +1,64 @@
+class Solution {
+public:
+    // class mycomparion {
+    // public:
+    //     //小顶堆
+    //     bool operator()(const pair<int, int>& lhs, const pair<int, int>& rhs) {
+    //         return lhs.second > rhs.second;
+    //     }
+    // };
+    // vector<int> topKFrequent(vector<int>& nums, int k) {
+    //     std::unordered_map<int, int> frequence_; //对频率进行统计
+    //     for(const int& v : nums) {
+    //         frequence_[v]++;
+    //     }
+
+    //     //按照频率建立优先队列 priority_queue
+    //     priority_queue<pair<int, int>, vector<pair<int, int>>, mycomparion> pq;
+    //     for(auto & it : frequence_) {
+    //         pq.push(it);
+    //         if(pq.size() > k) {
+    //             pq.pop();
+    //         }
+    //     }
+
+    //     vector<int> res;
+    //     while(!pq.empty()) {
+    //         res.push_back(pq.top().first);
+    //         pq.pop();
+    //     }
+    //     return res;
+    // }
+
+
+    //直接利用大顶堆实现
+    class mycomparion2 {
+    public:
+        //小顶堆
+        bool operator()(const pair<int, int>& lhs, const pair<int, int>& rhs) {
+            return lhs.second < rhs.second;
+        }
+    };
+    vector<int> topKFrequent(vector<int>& nums, int k) {
+        std::unordered_map<int, int> frequence_; //对频率进行统计
+        for(const int& v : nums) {
+            frequence_[v]++;
+        }
+
+        //按照频率建立优先队列 priority_queue
+        priority_queue<pair<int, int>, vector<pair<int, int>>, mycomparion2> pq;
+        for(auto & it : frequence_) {
+            pq.push(it);
+        }
+
+        vector<int> res;
+        while(k > 0) {
+            res.push_back(pq.top().first);
+            pq.pop();
+            k--;
+        }
+        return res;
+    }
+};
+//runtime:16 ms
+//memory:13.3 MB

@@ -1,0 +1,82 @@
+> Problem: [491. 递增子序列](https://leetcode.cn/problems/non-decreasing-subsequences/description/)
+
+[TOC]
+
+# 思路：回溯
+
+本题可以使用回溯求解，可以将本问题切割成很多个小部分，只考虑其中一个数，然后将剩余的数往下递归处理，可以理解成好多层，每层只加一个元素：
+- 定义一个数组 `tmp` 保存**递增子序列**，由于递增子序列中 **至少有两个元素**，所以只要递增子序列的长度如果大于 1 ,则是一种可能；
+- 还要考虑去重的情况，可以使用 **哈希表** 或者 使用**数组**（元素范围为`[-100, 100]`）保存进行去重，这里使用数组：
+  - 新的一层 `used` 都会重新定义（清空），所以要知道 `used` 只负责本层！
+
+![0e5295dc8fa4a8dcad8512b89184d0a.jpg](https://pic.leetcode.cn/1684761253-GUZxhy-0e5295dc8fa4a8dcad8512b89184d0a.jpg)
+
+# Code
+
+* []
+
+```Java
+class Solution {
+    private List<List<Integer>> ans = new ArrayList<>();
+    private List<Integer> tmp = new ArrayList<>();
+    private void backtracking(int[] nums, int startIndex){
+        if(tmp.size() > 1){//如果长度大于1就是一种可能
+            ans.add(new ArrayList<>(tmp));
+        }
+        int[] used = new int[201];//使用数组对本层元素进行去重
+        for(int i = startIndex; i < nums.length; i++){
+            if((!tmp.isEmpty() && nums[i] < tmp.get(tmp.size() - 1)) || (used[nums[i] + 100] == 1)){//排除较小的数和已经使用过的数
+                continue;
+            }
+            used[nums[i] + 100] = 1;// 记录这个元素在本层用过了，本层后面不能再用了
+            tmp.add(nums[i]);
+            backtracking(nums, i + 1);
+            tmp.remove(tmp.size() - 1);//回溯，弹出最后一个元素，继续遍历其他可能
+        }
+    }
+
+    public List<List<Integer>> findSubsequences(int[] nums) {
+        backtracking(nums, 0);
+        return ans;
+    }
+}
+```
+
+* []
+
+```C++
+class Solution {
+private:
+    vector<vector<int>> ans;
+    vector<int> tmp;
+    void backtracking(vector<int>& nums, int startIndex){
+        if(tmp.size() > 1){//如果长度大于1就是一种可能
+            ans.push_back(tmp);
+        }
+        int used[201] = {0}; //使用数组对本层元素进行去重
+        for(int i = startIndex; i < nums.size(); i++){
+            if((!tmp.empty() && nums[i] < tmp.back()) || used[nums[i] + 100] == 1){//排除较小的数和已经使用过的数
+                continue;
+            }
+            used[nums[i] + 100] = 1;// 记录这个元素在本层用过了，本层后面不能再用了
+            tmp.push_back(nums[i]);
+            backtracking(nums, i + 1);
+            tmp.pop_back();//回溯，弹出最后一个元素，继续遍历其他可能
+        }
+    }
+public:
+    vector<vector<int>> findSubsequences(vector<int>& nums) {
+        backtracking(nums, 0);
+        return ans;
+    }
+};
+```
+
+# 复杂度分析：
+
+- **时间复杂度**：$O(n * 2^n)$，这里枚举所有子序列的时间代价是 $O(2^n)$，每次检测序列是否合法和获取哈希值的时间代价都是 $O(n)$，故渐近时间复杂度为 $O(n * 2^n)$。
+- **空间复杂度**：$O(n)$。
+
+> 放弃一件事很容易，每天能坚持一件事一定很酷，一起每日一题吧！
+
+**关注我[LeetCode主页](https://leetcode.cn/u/shen-du-rm/) /  [CSDN—力扣专栏](http://t.csdn.cn/kQLJO)，每日更新！**

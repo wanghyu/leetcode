@@ -14,6 +14,8 @@
 #include <vector>
 #include <unordered_map>
 #include <map>
+#include <algorithm>
+
 using namespace std;
 
 struct ListNode {
@@ -42,6 +44,16 @@ void printVec(vector<T> vec) {
     }
     cout << endl;
 }
+
+template<typename T>
+void printVecVec(vector<vector<T>> vec) {
+    for(auto t : vec) {
+        printVec(t);
+    }
+    cout << endl;
+}
+
+
 
 /*
     ListNode l5(5, nullptr);
