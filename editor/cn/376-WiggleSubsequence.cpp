@@ -59,7 +59,8 @@
 
 #include "leetcode-base.h"
 
-//如果第一个元素保留
+//怎么判断第一个元素要不要保留呢？？
+
 //leetcode submit region begin(Prohibit modification and deletion)
 class Solution {
 public:

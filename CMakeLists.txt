@@ -25,3 +25,7 @@ add_executable(491-NonDecreasingSubsequences editor/cn/491-NonDecreasingSubseque
 add_executable(46-Permutations editor/cn/46-Permutations.cpp)
 add_executable(47-PermutationsII editor/cn/47-PermutationsII.cpp)
 add_executable(455-AssignCookies editor/cn/455-AssignCookies.cpp)
+add_executable(53-MaximumSubarray editor/cn/53-MaximumSubarray.cpp)
+add_executable(122-BestTimeToBuyAndSellStockII editor/cn/122-BestTimeToBuyAndSellStockII.cpp)
+add_executable(55-JumpGame editor/cn/55-JumpGame.cpp)
+add_executable(45-JumpGameII editor/cn/45-JumpGameII.cpp)
