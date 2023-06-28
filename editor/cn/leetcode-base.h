@@ -9,12 +9,6 @@
 #define LEETCODE_LEETCODE_BASE_H
 
 #include<bits/stdc++.h>
-#include <iostream>
-#include <string>
-#include <vector>
-#include <unordered_map>
-#include <map>
-#include <algorithm>
 
 using namespace std;
 
