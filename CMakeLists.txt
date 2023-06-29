@@ -38,3 +38,4 @@ add_executable(452-MinimumNumberOfArrowsToBurstBalloons editor/cn/452-MinimumNum
 add_executable(746-MinCostClimbingStairs editor/cn/746-MinCostClimbingStairs.cpp)
 add_executable(62-UniquePaths editor/cn/62-UniquePaths.cpp)
 add_executable(63-UniquePathsII editor/cn/63-UniquePathsII.cpp)
+add_executable(739-DailyTemperatures editor/cn/739-DailyTemperatures.cpp)

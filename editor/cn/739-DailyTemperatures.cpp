@@ -33,7 +33,35 @@
 class Solution {
 public:
     vector<int> dailyTemperatures(vector<int>& temperatures) {
-        
+        stack<int> sk; //单调栈  单调递增 从栈头到栈尾
+        vector<int> res(temperatures.size(), 0);
+
+        for(int i = 0; i < temperatures.size(); i++) {
+            while(!sk.empty() && temperatures[i] > temperatures[sk.top()]) {
+                res[sk.top()] = i - sk.top();
+                sk.pop();
+            }
+            sk.push(i);
+        }
+       // printStack(sk);
+        return res;
+    }
+
+    //Time Limit
+    vector<int> dailyTemperatures2(vector<int>& temperatures) {
+        vector<int> res(temperatures.size());
+        for(int i = 0; i < temperatures.size(); i++) {
+            for(int j = i+1; j < temperatures.size(); j++) {
+                if(j == temperatures.size() -1) {
+                    res[i] = 0;
+                }
+                if(temperatures[j] > temperatures[i]) {
+                    res[i] = j-i;
+                    break;
+                }
+            }
+        }
+        return res;
     }
 };
 //leetcode submit region end(Prohibit modification and deletion)
@@ -41,6 +69,8 @@ public:
 
 int main(){
     [[maybe_unused]] Solution s;
-    
+    vector<int> tem{73,74,75,71,69,72,76,73};
+    auto res = s.dailyTemperatures(tem);
+    printVec(res);
     return 0;
 }

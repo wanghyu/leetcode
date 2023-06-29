@@ -47,6 +47,17 @@ void printVecVec(vector<vector<T>> vec) {
     cout << endl;
 }
 
+template<typename T>
+void printStack(const stack<T> sk) {
+    auto tmp = sk;
+    cout << "stack:";
+    while(!tmp.empty()) {
+        cout << tmp.top()<< " ";
+        tmp.pop();
+    }
+    cout << endl;
+}
+
 
 
 /*
