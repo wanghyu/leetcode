@@ -33,3 +33,4 @@ add_executable(1005-MaximizeSumOfArrayAfterKNegations editor/cn/1005-MaximizeSum
 add_executable(134-GasStation editor/cn/134-GasStation.cpp)
 add_executable(135-Candy editor/cn/135-Candy.cpp)
 add_executable(406-QueueReconstructionByHeight editor/cn/406-QueueReconstructionByHeight.cpp)
+add_executable(1365-HowManyNumbersAreSmallerThanTheCurrentNumber editor/cn/1365-HowManyNumbersAreSmallerThanTheCurrentNumber.cpp)

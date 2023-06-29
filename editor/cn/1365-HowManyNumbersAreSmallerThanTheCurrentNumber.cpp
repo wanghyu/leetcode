@@ -49,7 +49,40 @@
 class Solution {
 public:
     vector<int> smallerNumbersThanCurrent(vector<int>& nums) {
+        vector<int> tmp = nums;
+        sort(tmp.begin(), tmp.end());
+        int hash[101];
 
+        //要从后往前， 这样处理重复的数据
+        for(int i = tmp.size() - 1; i >= 0; i--) {
+            hash[tmp[i]] = i;
+        }
+
+        for(int i = 0; i <nums.size(); i++) {
+            tmp[i] = hash[nums[i]];
+        }
+        return tmp;
+    }
+
+
+    //暴力
+    vector<int> smallerNumbersThanCurrent2(vector<int>& nums) {
+        unordered_map<int, int> countMap;
+        for(int i=0; i< nums.size(); i++) {
+            countMap[nums[i]]++;
+        }
+
+        vector<int> res;
+        for(int i = 0; i < nums.size(); i++) {
+            int count = 0;
+            for(auto it = countMap.begin(); it  != countMap.end(); it++) {
+                if(it->first <nums[i]) {
+                    count += it->second;
+                }
+            }
+            res.push_back(count);
+        }
+        return res;
     }
 };
 //leetcode submit region end(Prohibit modification and deletion)
@@ -57,6 +90,8 @@ public:
 
 int main(){
     [[maybe_unused]] Solution s;
-    
+    vector<int> nums{6,5,4,8};
+    auto res = s.smallerNumbersThanCurrent(nums);
+    printVec(res);
     return 0;
 }
