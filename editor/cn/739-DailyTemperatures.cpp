@@ -43,7 +43,6 @@ public:
             }
             sk.push(i);
         }
-       // printStack(sk);
         return res;
     }
 
