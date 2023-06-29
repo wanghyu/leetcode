@@ -58,9 +58,25 @@
 
 //leetcode submit region begin(Prohibit modification and deletion)
 class Solution {
+private:
+    static bool cmp(vector<int>& a, vector<int>& b) {
+         return a[0] < b[0];
+    }
 public:
     int findMinArrowShots(vector<vector<int>>& points) {
+        if(points.empty()) return 0;
 
+        sort(points.begin(), points.end(), cmp);
+
+        int res = 1;
+        for(int i = 1; i< points.size(); i++) {
+            if(points[i][0] > points[i-1][1]) {
+                res++;
+            } else {
+                points[i][1] = min(points[i-1][1], points[i][1]);
+            }
+        }
+        return res;
     }
 };
 //leetcode submit region end(Prohibit modification and deletion)
@@ -68,6 +84,8 @@ public:
 
 int main(){
     [[maybe_unused]] Solution s;
-    
+    vector<vector<int>> points{{10,16},{2,8},{1,6},{7,17}};
+    s.findMinArrowShots(points);
+
     return 0;
 }
