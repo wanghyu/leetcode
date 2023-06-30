@@ -1,0 +1,30 @@
+class Solution {
+public:
+    vector<int> partitionLabels(string S) {
+        //统计每个字母最后出现的位置
+        map<char, int> position;
+        vector<int> res;
+        int len = S.size();
+        int start = 0;
+        int index;
+        int last;
+
+        for(int i = 0; i < len; i++) {
+            position[S[i]] = i;
+        }
+
+        while(start < len) {
+            last = position[S[start]];
+            index = start;
+            while(index < len && index <= last) {
+                last = max(last, position[S[index]]);
+                index++;
+            }
+            res.push_back(last-start+1);
+            start = last+1;
+        }
+        return res;
+    }
+};
+//runtime:8 ms
+//memory:6.5 MB

@@ -39,3 +39,6 @@ add_executable(746-MinCostClimbingStairs editor/cn/746-MinCostClimbingStairs.cpp
 add_executable(62-UniquePaths editor/cn/62-UniquePaths.cpp)
 add_executable(63-UniquePathsII editor/cn/63-UniquePathsII.cpp)
 add_executable(739-DailyTemperatures editor/cn/739-DailyTemperatures.cpp)
+add_executable(763-PartitionLabels editor/cn/763-PartitionLabels.cpp)
+add_executable(343-IntegerBreak editor/cn/343-IntegerBreak.cpp)
+add_executable(96-UniqueBinarySearchTrees editor/cn/96-UniqueBinarySearchTrees.cpp)
