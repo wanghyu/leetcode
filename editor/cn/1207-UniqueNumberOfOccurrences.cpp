@@ -49,7 +49,7 @@ public:
         bool fre[1002] = {false};
         for(int i = 0; i < 2000; i++) {
             if(count[i]) {
-                if(fre[count[i]] == false) fre[count[i]] = true;
+                if(!fre[count[i]]) fre[count[i]] = true;
                 else
                     return false;
             }

@@ -1,0 +1,60 @@
+class Solution {
+public:
+    //暴力法
+    vector<int> searchRange2(vector<int>& nums, int target) {
+        int leftIdx = -1, rightIdx = -1;
+        for(int i = 0; i< nums.size(); i++) {
+            if(nums[i] == target) {
+                leftIdx = i;
+                break;
+            }
+        }
+
+        for(int j = nums.size()-1; j >=0; j--) {
+            if(nums[j] == target) {
+                rightIdx = j;
+                break;
+            }
+        }
+        return vector<int>{leftIdx, rightIdx};
+    }
+
+    //二分法
+    vector<int> searchRange(vector<int>& nums, int target) {
+        int lower = lower_bound(nums, target);
+        int upper = upper_bound(nums, target) -1;
+        if(lower == nums.size() || nums[lower] != target){
+            return vector<int>{-1, -1};
+        }
+        return vector<int>{lower, upper};
+    }
+private:
+    //
+    int lower_bound(vector<int>& nums, int target) {
+      int left = 0, right = nums.size();
+      while(left < right) {
+          int mid = left + ((right - left) >> 1);
+          if(nums[mid] >= target) {
+              right = mid;
+          } else if(nums[mid] < target) {
+              left = mid + 1;
+          }
+      }
+      return right;
+    }
+    
+    int upper_bound(vector<int>& nums, int target) {
+        int left = 0, right = nums.size(), mid;
+        while(left < right) {
+            mid = left + ((right - left) >> 1);
+            if(nums[mid] <= target) {
+                left = mid + 1;
+            } else {
+                right = mid;
+            }
+        }
+        return right;
+    }
+};
+//runtime:12 ms
+//memory:13.4 MB

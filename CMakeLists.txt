@@ -47,3 +47,6 @@ add_executable(1207-UniqueNumberOfOccurrences editor/cn/1207-UniqueNumberOfOccur
 add_executable(189-RotateArray editor/cn/189-RotateArray.cpp)
 add_executable(151-ReverseWordsInAString editor/cn/151-ReverseWordsInAString.cpp)
 add_executable(445-AddTwoNumbersII editor/cn/445-AddTwoNumbersII.cpp)
+add_executable(704-BinarySearch editor/cn/704-BinarySearch.cpp)
+add_executable(34-FindFirstAndLastPositionOfElementInSortedArray editor/cn/34-FindFirstAndLastPositionOfElementInSortedArray.cpp)
+add_executable(922-SortArrayByParityII editor/cn/922-SortArrayByParityII.cpp)
