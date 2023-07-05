@@ -1,0 +1,30 @@
+### 解题思路
+
+解题入手点是构建两个双指针，分别指向headA、headB，然后当a与b不相等时，先遍历各自节点部分，再遍历公共部分（若存在），接着遍历非公共部分，直到a等于b，则找到a为相交点（a->c->b与b->c->a，即a、b为非公共节点，c为公共节点）。否则遍历完各自节点均为有公共部分，说明不相交。
+
+### 代码
+
+* cpp
+
+```cpp
+/**
+ * Definition for singly-linked list.
+ * struct ListNode {
+ *     int val;
+ *     ListNode *next;
+ *     ListNode(int x) : val(x), next(NULL) {}
+ * };
+ */
+class Solution {
+public:
+    ListNode *getIntersectionNode(ListNode *headA, ListNode *headB) {
+        ListNode *a = headA, *b = headB;
+        while (a != b) {
+            a = a ? a->next : headB; //当a遍历为空时，则从另外指针的头结点开始遍历
+            b = b ? b->next : headA;
+        }
+        return a;
+    }
+};
+```
+
