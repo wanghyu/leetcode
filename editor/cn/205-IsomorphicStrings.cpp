@@ -40,27 +40,21 @@ public:
     bool isIsomorphic(string s, string t) {
         if(s.size() != t.size()) return false;
 
-        vector<int> vec(200);
+        unordered_map<char, char> map1;
+        unordered_map<char, char> map2;
         for(int i = 0; i < s.size(); i++) {
-            if(vec[s[i]] != 0) {
-                if( vec[s[i]] != t[i] )
-                    return false;
-            } else {
-                vec[s[i]] = t[i];
+            if(map1.find(s[i]) == map1.end()) {
+                map1[s[i]] = t[i];
+            }
+
+            if(map2.find(t[i]) == map2.end()) {
+                map2[t[i]] = s[i];
+            }
+
+            if(map1[s[i]] != t[i] || map2[t[i]] != s[i]) {
+                return false;
             }
         }
-
-        vec.clear();
-        vec.resize(200);
-        for(int i = 0; i < s.size(); i++) {
-            if(vec[t[i]] != 0) {
-                if( vec[t[i]] != s[i] )
-                    return false;
-            } else {
-                vec[t[i]] = s[i];
-            }
-        }
-
         return true;
     }
 };
