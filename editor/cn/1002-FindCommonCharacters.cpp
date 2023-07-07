@@ -37,11 +37,10 @@ public:
 
         int hash2[26] = {0};
         for(int i = 1; i < words.size(); i++) {
-            memset(hash2, 0, 26*sizeof(int));
+            memset(hash2, 0, 26 * sizeof(int));
             for(int j = 0; j < words[i].size(); j++) {
                 hash2[words[i][j] - 'a']++;
             }
-
 
             for(int j =0; j < 26; j++) {
                 hash[j] = min(hash[j], hash2[j]);
