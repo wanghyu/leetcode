@@ -1,0 +1,28 @@
+# 解题思路
+
+可能大家一眼看见**分割问题，就会想到回溯**，那么这道题是回溯吗，这道题确实是回溯。但是如果用回溯的话会超时，为什么呢，我们做题前可以看一下数据范围，该题数组**大小为200，很可能回溯深度就是200层，一般深度小于100，回溯可以做出来，超过100了，回溯就很会超时**。所以该题目就不适合回溯，此时我们再来分析一下，**每个元素只可以取一次，元素的价值和大小就是自己本身，那么不就是背包问题**，此时用背包问题思路即可快速求解！
+
+# 代码实现
+
+* 
+
+```
+class Solution {
+public:
+    bool canPartition(vector<int>& nums) {
+        int sum = 0;
+        for (auto &i: nums) sum += i;
+        if (sum % 2 != 0) return false;
+        sum /= 2;
+        vector<int> dp(20001);
+        for (int i = 0; i < nums.size(); ++i) {
+            for (int j = sum; j >= nums[i]; --j) {
+                dp[j] = max(dp[j], dp[j - nums[i]] + nums[i]);
+            }
+        }
+        if (dp[sum] == sum) return true;
+        return false;
+    }
+};
+```
+

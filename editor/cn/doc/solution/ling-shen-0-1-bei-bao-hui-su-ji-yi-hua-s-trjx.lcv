@@ -1,0 +1,83 @@
+- 详细思路参见 [@灵茶山艾府](/u/endlesscheng) B站视频 [0-1背包 完全背包【基础算法精讲 18】](https://www.bilibili.com/video/BV16Y411v7Y6/?share_source=copy_web&vd_source=a71f9ad96b761fa976590ef0f63f1405)
+
+- 题目要求分割成两个和相等的子集：
+
+  1. 假设这个和为 `p`，数组总和为 `s`
+  2. 那么 `p = s-p`
+  3. 即 `p = s/2`
+  4. 翻译一下：求数组中是否有和为 `s/2` 的方案（方案数 `n>0 ? true : false`)
+  5. 由于数组都为正数，`s>0`
+  6. 由于要得到 `s/2` 且数组元素都为整数，那么 `s%2 == 0` ,`s`一定为偶数
+- 直接给出代码(cpp)：
+
+* cpp
+
+```cpp
+class Solution {
+public:
+    bool canPartition(vector<int>& nums) {
+        int target = accumulate(nums.begin(), nums.end(), 0);
+        if ( target<0 || target%2 )
+            return false;
+        target /= 2;
+
+        // // 记忆化搜索
+        // int n = nums.size(), cache[n][target+1];
+        // memset(cache, -1, sizeof(cache));
+        // function<bool(int, int)> dfs = [&](int i, int c) -> bool {
+        //     if ( i<0 )
+        //         return c==0;
+        //     if ( cache[i][c]!=-1 )
+        //         return cache[i][c];
+        //     if ( c<nums[i] )
+        //         return cache[i][c] = dfs(i-1,c) > 0;
+        //     return cache[i][c] = dfs(i-1,c) + dfs(i-1,c-nums[i]) > 0;
+        // };
+
+        // return dfs(n-1, target);
+
+        // // 1:1 递推
+        // int n = nums.size(), f[n+1][target+1];
+        // memset(f, 0, sizeof(f));
+        // f[0][0] = 1;
+        // for ( int i=0;i<n;++i ) {
+        //     for ( int c=0;c<target+1;++c ) {
+        //         if ( c<nums[i] )
+        //             f[i+1][c] = f[i][c] > 0;
+        //         else
+        //             f[i+1][c] = f[i][c] + f[i][c-nums[i]] > 0; 
+        //     }
+        // }
+        // return f[n][target];
+
+        // // 滚动双数组空间优化
+        // int n = nums.size(), f[2][target+1];
+        // memset(f, 0, sizeof(f));
+        // f[0][0] = 1;
+        // for ( int i=0;i<n;++i ) {
+        //     for ( int c=0;c<target+1;++c ) {
+        //         if ( c<nums[i] )
+        //             f[(i+1)%2][c] = f[i%2][c] > 0;
+        //         else
+        //             f[(i+1)%2][c] = f[i%2][c] + f[i%2][c-nums[i]] > 0; 
+        //     }
+        // }
+        // return f[n%2][target];
+
+        // 单数组逆序空间优化
+        int n = nums.size(), f[target+1];
+        memset(f, 0, sizeof(f));
+        f[0] = 1;
+        for ( int i=0;i<n;++i ) {
+            for ( int c=target;c>-1;--c ) {
+                if ( c<nums[i] )
+                    f[c] = f[c] > 0;
+                else
+                    f[c] = f[c] + f[c-nums[i]] > 0; 
+            }
+        }
+        return f[target];
+    }
+};
+```
+

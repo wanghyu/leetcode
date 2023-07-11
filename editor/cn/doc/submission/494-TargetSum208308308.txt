@@ -1,0 +1,25 @@
+class Solution {
+public:
+ public:
+    int findTargetSumWays(vector<int>& nums, int target) {
+        int sum = 0;
+        for(int i = 0;i < nums.size(); i++) {
+            sum += nums[i];
+        }
+
+        if(target > sum) return 0;
+        if((sum + target) % 2) return 0;
+        int innerTarget = (sum + target) / 2;
+
+        vector<int> dp(innerTarget+1, 0);
+        dp[0] = 1; //只有一种方法，一件东西都不放
+        for(int i = 0; i < nums.size(); i++) {
+            for(int j = innerTarget; j >= nums[i]; j--) {
+                dp[j] += dp[j-nums[i]];
+            }
+        }
+        return dp[innerTarget];
+    }
+};
+//runtime:8 ms
+//memory:9.1 MB

@@ -1,0 +1,47 @@
+> Problem: [6909. 最长奇偶子数组](https://leetcode.cn/problems/longest-even-odd-subarray-with-threshold/description/)
+
+[TOC]
+
+# 思路
+
+首先根据题目的要求，容易发现，子数组的开头元素一定是一个偶数，然后子数组中的每个元素奇偶错位，那么可以通过遍历这个数组，确定子数组的开头元素，然后再通过一边遍历，一遍扩展的方式，将子数组的长度不断进行更新，直到遇到第一个不满足的元素则退出循环。
+
+# 解题方法
+
+通过双指针遍历，先确定子数组的开头元素，然后从这个元素的下一个位置，再进行遍历即可。
+
+# 复杂度
+
+- 时间复杂度: $O(n^2)$
+- 空间复杂度: $O(1)$
+
+# Code
+
+* []
+
+```c++
+
+class Solution {
+public:
+    int longestAlternatingSubarray(vector<int>& nums, int threshold) {
+        int res = 0;
+        int l = 0; //记录子数组的起始位置
+        int r = 0; //记录子数组的终止位置
+        for (int i = 0; i < nums.size(); i++) {
+            if (nums[i] % 2 != 0 || nums[i] > threshold) continue;//如果起始结点为奇数，或者大于给定的数值，则跳过本层循环
+            l = i;//记录起始结点
+            r = i; //记录终止结点
+            for (int j = i + 1; j < nums.size(); j++) { //找到起始的偶数结点后，则从这个起点往后遍历
+                if (nums[j] <= threshold && nums[j - 1] % 2 != nums[j] % 2) {
+                    r++; //不断更新终止位置
+                }else {
+                    break; //说明找到一个不满足的数据，则退出循环，结束本次子数组长度的记录。注意这条代码，比赛时就是忘记退出循环，导致部分数据无法通过，因为r会在后面满足条件时继续更新。
+                }
+            }
+            res = max(r - l + 1, res); //不断更新子数组的长度，每次取最大值
+        }
+        return res;
+    }
+};
+```
+

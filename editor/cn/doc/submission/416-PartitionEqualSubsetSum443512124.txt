@@ -1,0 +1,33 @@
+class Solution {
+public:
+    bool canPartition(vector<int>& nums) {
+        int sum = accumulate(nums.begin(), nums.end(), 0);
+        if(sum % 2 || nums.size() == 1) return false;
+
+        int target = sum / 2;
+        vector<vector<int>> dp(nums.size(), vector<int>(target+1, 0));
+
+        for(int j = 0; j <= target; j++) {
+            if(j >= nums[0]) {
+                dp[0][j] = nums[0];
+            }
+        }
+
+        for(int i = 1; i < nums.size(); i++) {
+            for(int j = 0; j <= target; j++) {
+                if(j < nums[i]) dp[i][j] = dp[i-1][j];
+                else
+                    dp[i][j] = max(dp[i-1][j], dp[i-1][j-nums[i]] + nums[i]);
+            }
+        }
+//        printVecVec(dp);
+
+        if(dp[nums.size()-1][target] == target)
+            return true;
+
+        return false;
+    }
+};
+
+//runtime:404 ms
+//memory:92.9 MB
