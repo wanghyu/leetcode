@@ -1,0 +1,27 @@
+### 解题思路
+
+此处撰写解题思路
+完全背包，先遍历物品再遍历背包，物品只会顺序得到，求出来的是组合
+完全背包，先遍历背包再遍历物品，物品得到的次数就回打算，求出来的是排列
+
+### 代码
+
+* typescript
+
+```typescript
+function combinationSum4(nums: number[], target: number): number {
+    // dp[j]是target为j的排列数
+    // 可由,有i和无i推导出来
+    // 有i,dp[j]+
+    // 无i,dp[j-nums[i]]
+    let dp: number[] = new Array(target + 1).fill(0);
+    dp[0] = 1;
+    for (let i = 0; i <= target; i++) {
+        for (let j = 0; j < nums.length; j++) {
+            if (i - nums[j] >= 0) dp[i] += dp[i - nums[j]];
+        }
+    }
+    return dp[target];
+}
+```
+

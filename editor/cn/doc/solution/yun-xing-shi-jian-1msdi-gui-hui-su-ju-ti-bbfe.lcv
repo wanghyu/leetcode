@@ -1,0 +1,70 @@
+![image.png](https://pic.leetcode.cn/1675160181-YJNucP-image.png)
+
+* 
+
+```
+class Solution {
+    public static int combinationSum4(int[] nums, int target) {
+        map = new HashMap<>();
+        return dfs(nums, target);
+    }
+
+    static Map<Integer, Integer> map = new HashMap<>();
+
+    public static int dfs(int[] a, int target) {
+        if (map.containsKey(target)) {
+            return map.get(target);
+        }
+        if (target == 0) {
+            return 1;
+        }
+        int cnt = 0;
+        for (int i = 0; i < a.length; i++) {
+            if (target - a[i] < 0) {
+                continue;
+            }
+            cnt += dfs(a, target - a[i]);
+        }
+        map.put(target, cnt);
+        return cnt;
+    }
+}
+```
+
+生成具体解的代码，只需要稍微改一下。
+![image.png](https://pic.leetcode.cn/1675160398-SWGepM-image.png)
+![image.png](https://pic.leetcode.cn/1675160404-gQbXnS-image.png)
+
+* 
+
+```
+import java.util.ArrayList;
+import java.util.List;
+
+public class 部分和3 {
+    static List<List<Integer>> ans = new ArrayList<>();
+    static List<Integer> path = new ArrayList<>();
+
+    public static List<List<Integer>> backtrack(int[] a, int target) {
+        if (target == 0) {
+            ans.add(new ArrayList<>(path));
+        }
+        for (int i = 0; i < a.length; i++) {
+            if (target - a[i] < 0) {
+                continue;
+            }
+            path.add(a[i]);
+            backtrack(a, target - a[i]);
+            path.remove(path.size() - 1);
+        }
+        return ans;
+    }
+
+    public static void main(String[] args) {
+        int[] a = {2, 6, 3, 7};
+        int target = 7;
+        System.out.println(backtrack(a, target));
+    }
+}
+```
+

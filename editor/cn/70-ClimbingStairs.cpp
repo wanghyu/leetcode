@@ -51,7 +51,7 @@
 //leetcode submit region begin(Prohibit modification and deletion)
 class Solution {
 public:
-    int climbStairs(int n) {
+    int climbStairs2(int n) {
         if(n <= 2) return n;
 
         vector<int> dp(n+1);
@@ -59,6 +59,21 @@ public:
         dp[2] = 2;
         for(int i =3; i<=n;i++) {
             dp[i] = dp[i-1] + dp[i-2];
+        }
+        return dp[n];
+    }
+
+    //转为背包问题
+    int climbStairs(int n) {
+        vector<int> dp(n+1, 0);
+        dp[0] = 1;
+
+        int m = 2;
+        for(int i = 1; i <= n; i++) { //遍历背包
+            for(int j = 1; j <=m; j++) {
+                if(i >= j)
+                    dp[i] += dp[i-j];
+            }
         }
         return dp[n];
     }

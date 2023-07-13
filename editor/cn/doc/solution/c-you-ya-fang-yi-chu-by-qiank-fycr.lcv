@@ -1,0 +1,53 @@
+### 解题思路
+
+这题目的测试数据没有十年脑血栓真的想不出来 **（滑稽**
+对于C++这种对数据溢出敏感的语言，真的是**绝杀**
+如果想直接弄，上一个`unsigned`可以防溢出（这个的原理是溢出后不会报错）
+
+另外说一下为什么可能会出现溢出
+
+* 
+
+```
+例子：
+nums = [10,20,30,40, ... ,900, 999] target = 999
+ans = 1
+```
+
+前面的这些都是10的倍数，显然不可能凑出999，确实满足了题目中所说的
+
+> 题目数据保证答案符合 32 位整数范围。
+
+但是由这些与答案无关（不可能转移到target）的数据计算出来的结果，是有可能爆范围的。
+
+若一个零钱兑换方案数大于 `INT_MAX`，基于上述的理论来看，不会和`target`产生联系（不可能转移到`target`，否则`dp[target]`将会溢出，与题意不符），因此可以对这些数据进行任意操作。
+因此可以使用`if`进行判断，若会爆范围就直接不计算，从而避免对大数进行计算，或者使用`mod`来把大数变小防溢出。
+
+本题还是一个比较简单的背包问题，和昨天的题目也是类似的，但这个数据真的是**对C++慢慢的恶意**。
+
+### 代码
+
+![image.png](https://pic.leetcode-cn.com/1619194094-weqEsX-image.png)
+
+* cpp
+
+```cpp
+class Solution {
+public:
+    int combinationSum4(vector<int>& nums, int target) {
+        sort(nums.begin(), nums.end());
+        int n = nums.size();
+        int dp[target+1];
+        memset(dp, 0, sizeof(dp));
+        dp[0] = 1;
+        for(int num = 1; num <= target; num++) {
+            for(auto &ele : nums) {
+                if(ele > num) break;
+                dp[num] = 0LL + dp[num] + dp[num-ele] % INT_MAX;
+            }
+        }
+        return dp[target];
+    }
+};
+```
+
