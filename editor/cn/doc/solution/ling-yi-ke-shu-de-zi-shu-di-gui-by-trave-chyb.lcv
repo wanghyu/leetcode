@@ -1,0 +1,44 @@
+**思路：**
+- 一个树是另一个树的子树则要么这两个树相等，要么这个树是左树的子树，要么这个树的右树的子树。
+- 用两层递归来实现：
+
+1. Compare函数用于递归检查需要判断的树对应结点是否相同；（内层递归检查函数）
+2. isSubtree函数则用于判断是否为子树；（外层递归判断函数）
+
+### 代码
+
+* cpp
+
+```cpp
+class Solution {
+public:
+    bool compare(TreeNode* root, TreeNode* subRoot) {
+        //如果两个都为空
+        if(root==NULL&&subRoot==NULL){
+            return true;
+        }
+        //如果只有一个为空
+        if(root==NULL||subRoot==NULL){
+            return false;
+        }
+        //如果两个都不空，结点值也不同，那直接返回false
+        if(root->val!=subRoot->val){
+            return false;
+        }
+        //如果现在结点值和子树结点值相同，再分别检查两个的左右孩子
+        return compare(root->left, subRoot->left) && compare(root->right, subRoot->right);
+
+    }
+    bool isSubtree(TreeNode* root, TreeNode* subRoot) {
+        //如果要检查的子树为空，那么不用查了，肯定对的
+        if(subRoot == NULL) return true;
+
+        //如果要检查的子树不空，但root是空的，那也不用查了，错的。
+        if(root == NULL) return false;
+
+        //要么是它本身，要么是它左子树，要么是它的右子树
+        return compare(root, subRoot) || isSubtree(root->left, subRoot) || isSubtree(root->right, subRoot);
+    }
+};
+```
+

@@ -1,32 +1,45 @@
-//Given the root of a binary tree, return its maximum depth. 
+//Given the root of a complete binary tree, return the number of the nodes in 
+//the tree. 
 //
-// A binary tree's maximum depth is the number of nodes along the longest path 
-//from the root node down to the farthest leaf node. 
+// According to Wikipedia, every level, except possibly the last, is completely 
+//filled in a complete binary tree, and all nodes in the last level are as far 
+//left as possible. It can have between 1 and 2ʰ nodes inclusive at the last level h.
+// 
+//
+// Design an algorithm that runs in less than O(n) time complexity. 
 //
 // 
 // Example 1: 
 // 
 // 
-//Input: root = [3,9,20,null,null,15,7]
-//Output: 3
+//Input: root = [1,2,3,4,5,6]
+//Output: 6
 // 
 //
 // Example 2: 
 //
 // 
-//Input: root = [1,null,2]
-//Output: 2
+//Input: root = []
+//Output: 0
+// 
+//
+// Example 3: 
+//
+// 
+//Input: root = [1]
+//Output: 1
 // 
 //
 // 
 // Constraints: 
 //
 // 
-// The number of nodes in the tree is in the range [0, 10⁴]. 
-// -100 <= Node.val <= 100 
+// The number of nodes in the tree is in the range [0, 5 * 10⁴]. 
+// 0 <= Node.val <= 5 * 10⁴ 
+// The tree is guaranteed to be complete. 
 // 
 //
-// Related Topics 树 深度优先搜索 广度优先搜索 二叉树 👍 1635 👎 0
+// Related Topics 树 深度优先搜索 二分查找 二叉树 👍 969 👎 0
 
 
 #include "leetcode-base.h"
@@ -46,31 +59,29 @@
 class Solution {
 public:
     //迭代
-    int maxDepth2(TreeNode* root) {
+    int countNodes2(TreeNode* root) {
         queue<TreeNode*> que;
         if(root) que.push(root);
 
-        int dep = 0;
+        int num = 0;
         while(!que.empty()) {
             int size = que.size();
             for(int i = 0; i < size; i++) {
-                auto node = que.front();
-                que.pop();
-
+                num++;
+                auto node = que.front(); que.pop();
                 if(node->left) que.push(node->left);
                 if(node->right) que.push(node->right);
             }
-            dep++;
         }
-        return dep;
+        return num;
     }
 
     //递归
-    int maxDepth(TreeNode* root) {
+    int countNodes(TreeNode* root) {
         if(!root) return 0;
-        return max(1 + maxDepth(root->left), 1 + maxDepth(root->right));
-    }
 
+        return 1 + countNodes(root->left) + countNodes(root->right);
+    }
 };
 //leetcode submit region end(Prohibit modification and deletion)
 
