@@ -47,7 +47,7 @@
  */
 class Solution {
 public:
-    int minDepth(TreeNode* root) {
+    int minDepth2(TreeNode* root) {
         queue<TreeNode*> que;
         if(root) que.push(root);
 
@@ -66,6 +66,29 @@ public:
             }
         }
         return dep;
+    }
+
+    //递归
+    int getDepth(TreeNode* node) {
+        if(!node) return 0;
+
+        int leftDepth = getDepth(node->left);
+        int rightDepth = getDepth(node->right);
+
+        if(node->left && !node->right) {
+            return 1 + leftDepth;
+        }
+
+        if(!node->left && node->right) {
+            return 1 + rightDepth;
+        }
+
+        return 1 + min(leftDepth, rightDepth);
+    }
+
+    int minDepth(TreeNode* root) {
+        if(!root) return 0;
+        return getDepth(root);
     }
 };
 //leetcode submit region end(Prohibit modification and deletion)

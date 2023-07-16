@@ -45,7 +45,7 @@
  */
 class Solution {
 public:
-    //迭代
+    //迭代  层序遍历
     int maxDepth2(TreeNode* root) {
         queue<TreeNode*> que;
         if(root) que.push(root);
@@ -66,9 +66,14 @@ public:
     }
 
     //递归
-    int maxDepth(TreeNode* root) {
+    int maxDepth3(TreeNode* root) {
         if(!root) return 0;
         return max(1 + maxDepth(root->left), 1 + maxDepth(root->right));
+    }
+
+    //前序 深度回溯
+    int maxDepth(TreeNode* root) {
+
     }
 
 };

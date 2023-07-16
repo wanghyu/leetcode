@@ -49,6 +49,7 @@
  */
 class Solution {
 public:
+    //后续
     int getHeight(TreeNode* root) {
         if(!root) return 0;
 
@@ -71,12 +72,25 @@ public:
 
     //迭代 后序遍历
     bool isBalanced(TreeNode* root) {
+        if(!root) return true;
 
+        stack<TreeNode*> sk;
+        sk.push(root);
+        while(!sk.empty()) {
+            auto node = sk.top(); sk.pop();
+            if(abs(getDepth(node->left) - getDepth(node->right)) > 1)
+                return false;
+
+            if(node->right) sk.push(node->right);
+            if(node->left) sk.push(node->left);
+        }
+        return true;
     }
 
-    int getDepth(TreeNode* root) {
+    //求cur节点当前的高度  后续
+    int getDepth(TreeNode* cur) {
         stack<TreeNode*> sk;
-        if(root) sk.push(root);
+        if(cur) sk.push(cur);
 
         int depth = 0;
         int result = 0;
@@ -90,11 +104,14 @@ public:
                 if(node->left) sk.push(node->left);
             } else {
                 sk.pop();
-                node = sk.top(); sk.pop();
+                sk.top(); sk.pop();
                 depth--;
             }
             result = max(result, depth);
         }
+        if(cur)
+            cout << cur->val <<  " " << result << endl;
+        return result;
     }
 };
 //leetcode submit region end(Prohibit modification and deletion)

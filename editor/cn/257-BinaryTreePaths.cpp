@@ -44,7 +44,7 @@
  */
 class Solution {
 public:
-    //前序遍历 递归
+    //前序遍历 递归 递归中伴随着回溯
     void traversal(TreeNode* cur, vector<int>& path, vector<string>& res) {
         path.push_back(cur->val);
 
@@ -78,7 +78,33 @@ public:
 
     //迭代
     vector<string> binaryTreePaths(TreeNode* root) {
+        stack<TreeNode*> sk;
+        stack<string> path;
+        vector<string> res;
 
+        if(root) {
+            sk.push(root);
+            path.push(to_string(root->val));
+        }
+
+        while(!sk.empty()) {
+            auto node = sk.top(); sk.pop();
+            string pa = path.top(); path.pop();
+            if(!node->left && !node->right) {
+                res.push_back(pa);
+            }
+
+            if(node->right) {
+                sk.push(node->right);
+                path.push(pa + "->" + to_string(node->right->val));
+            }
+
+            if(node->left) {
+                sk.push(node->left);
+                path.push(pa + "->" + to_string(node->left->val));
+            }
+        }
+        return res;
     }
 
 };

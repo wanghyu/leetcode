@@ -63,6 +63,7 @@ public:
         while(!que.empty()) {
             auto n1 = que.front();
             que.pop();
+
             auto n2 = que.front();
             que.pop();
 
