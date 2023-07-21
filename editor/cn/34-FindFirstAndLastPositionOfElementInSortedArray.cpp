@@ -83,6 +83,7 @@ public:
         return leftOrder;
     }
 
+
     vector<int> searchRange2(vector<int>& nums, int target) {
         int left = getLeftOrder(nums, target);
         int right = getRightOrder(nums, target);
@@ -94,6 +95,55 @@ public:
         //情况2 right - left == 1
         return {-1, -1};
     }
+
+    //寻找左边界 不包括target
+    int leftRange(vector<int>& nums, int target) {
+        int l = 0, r = nums.size(), mid;
+        int lRange = -2;
+        while(l < r) {
+            mid = l + ((r -l) >> 1);
+            if(nums[mid] < target) {
+                l = mid + 1;
+            } else if(nums[mid] > target) {
+                r = mid;
+            } else if(nums[mid] == target) {
+                r = mid;
+                lRange = r-1;
+            }
+        }
+        return lRange;
+    }
+
+    int rightRange(vector<int>& nums, int target) {
+        int l = 0, r = nums.size(), mid;
+        int rRange = -2;
+        while(l < r) {
+            mid = l + ((r -l) >> 1);
+            if(nums[mid] > target) {
+                r = mid;
+            } else if(nums[mid] < target) {
+                l = mid + 1;
+            } else if(nums[mid] == target) {
+                l = mid + 1;
+                rRange = l;
+            }
+        }
+        return rRange;
+    }
+
+
+    vector<int> searchRange(vector<int>& nums, int target) {
+        int left = leftRange(nums, target);
+        int right = rightRange(nums, target);
+
+        //情况1
+        if(left == -2 || right == -2)  return {-1, -1};
+        //情况3
+        if(right - left > 1) return {left+1, right-1};
+        //情况2 right - left == 1
+        return {-1, -1};
+    }
+
 };
 //leetcode submit region end(Prohibit modification and deletion)
 
@@ -101,10 +151,12 @@ public:
 int main(){
     [[maybe_unused]] Solution s;
     vector<int> nums{5,7,7,8,8,10};
-    int target = 1;
+    int target = 8;
     cout << lower_bound(nums.begin(), nums.end(), target) - nums.begin() << endl;
     cout << upper_bound(nums.begin(), nums.end(), target) - nums.begin() << endl;
 
     cout << s.getLeftOrder(nums, target) << " " << s.getRightOrder(nums, target) << endl;
+
+    cout << s.leftRange(nums, target) << " " << s.rightRange(nums, target) << endl;
     return 0;
 }
