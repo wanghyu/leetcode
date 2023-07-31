@@ -50,17 +50,19 @@
 
 #include "leetcode-base.h"
 
+
+
 //leetcode submit region begin(Prohibit modification and deletion)
-class Solution {
+/*class Solution {
 private:
-/*    bool contain(string str, string t) {
+*//*    bool contain(string str, string t) {
         for(int i = 0; i < t.size(); i++) {
             if(str.find(t[i]) == string::npos) {
                 return false;
             }
         }
         return true;
-    }*/
+    }*//*
 
     bool contain(unordered_map<char, int>& sMap, unordered_map<char, int>& tMap) {
         for(auto it = tMap.begin(); it != tMap.end(); it++) {
@@ -93,21 +95,60 @@ public:
                 }
 
                 sMap[s[left]]--;
-                if(s[left] == 0) {
-                    sMap.erase(s[left]);
-                }
                 left++;
             }
         }
         return min_len > s.size() ? string() : s.substr(min_l, min_len);
     }
+};*/
+class Solution {
+    bool contain(unordered_map<char,int>& sMap, unordered_map<char,int> tMap) {
+        for(auto it = tMap.begin(); it != tMap.end(); it++) {
+            auto it2 = sMap.find(it->first);
+            if(it2 == sMap.end()) {
+                return false;
+            }
+            if(it2->second < it->second) {
+                return false;
+            }
+        }
+        return true;
+    }
+
+public:
+    string minWindow(string s, string t) {
+        if(s.size() < t.size()) return "";
+
+        unordered_map<char, int> tMap;
+        for(auto ch : t) {
+            tMap[ch]++;
+        }
+
+        int i = 0;
+        int min_l;
+        int min_len = INT32_MAX;
+        unordered_map<char, int> sMap;
+        for(int j = 0; j< s.size(); j++) {
+            sMap[s[j]]++;
+            while(contain(sMap, tMap) && i <= j) {
+                if(min_len > j - i + 1) {
+                    min_len = j - i + 1;
+                    min_l = i;
+                }
+                sMap[s[i]]--;
+                i++;
+            }
+        }
+        return min_len == INT32_MAX? string("") : s.substr(min_l, min_len);
+    }
 };
+
 //leetcode submit region end(Prohibit modification and deletion)
 
 
 int main(){
     [[maybe_unused]] Solution s;
-    cout << s.minWindow("ADOBECODEBANC", "ABC") << endl;
+    cout << s.minWindow("A", "A") << endl;
 
     return 0;
 }

@@ -43,6 +43,18 @@
 class Solution {
 public:
     string removeDuplicates(string s) {
+        string res;
+        for(auto ch : s) {
+            if(res.empty() || res.back() != ch) {
+                res.push_back(ch);
+            } else {
+                res.pop_back();
+            }
+        }
+        return res;
+    }
+
+    string removeDuplicates2(string s) {
         stack<char> sk;
         for(int i = 0; i < s.size(); i++) {
             if(!sk.empty() && sk.top() == s[i]) {

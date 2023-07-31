@@ -58,7 +58,49 @@
 //leetcode submit region begin(Prohibit modification and deletion)
 class Solution {
 private:
-    void removeExtraSpace(string& str) {
+    void removeExtraSpace2(string& s) {
+        //删除多余的空格
+        for(int i = s.size()-1; i > 0; i--) {
+            if(s[i] == s[i-1] && s[i] == ' ') {
+                s.erase(s.begin() + i);
+            }
+        }
+
+        //删除前面的
+        if(s.size() > 0 && s[0] == ' ')
+            s.erase(s.begin());
+
+        if(s.size() > 0 && s[s.size()-1] == ' ') {
+            s.erase(s.begin() + s.size()-1);
+        }
+    }
+
+    void removeExtraSpace(string& s) {
+        int slow = 0, fast = 0;
+        //去除前面的
+        while(fast < s.size() && s[fast] == ' ') {
+            fast++;
+        }
+
+        for(; fast < s.size(); fast++) {
+            if(fast > 1 && s[fast] == s[fast-1] && s[fast-1] == ' ') {
+                continue;
+            } else {
+                s[slow++] = s[fast];
+            }
+        }
+
+        if(slow > 1 && s[slow-1] == ' ') {
+            s.resize(slow-1);
+        } else {
+            s.resize(slow);
+        }
+    }
+
+
+
+
+    void removeExtraSpace3(string& str) {
         int slow = 0;
         for(int i = 0; i < str.size(); ++i) {
             if(str[i] != ' ') {
@@ -96,5 +138,6 @@ public:
 int main(){
     [[maybe_unused]] Solution s;
     cout << s.reverseWords("the sky is blue") << endl;
+
     return 0;
 }

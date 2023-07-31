@@ -64,3 +64,4 @@ add_executable(977-SquaresOfASortedArray editor/cn/977-SquaresOfASortedArray.cpp
 add_executable(904-FruitIntoBaskets editor/cn/904-FruitIntoBaskets.cpp)
 add_executable(76-MinimumWindowSubstring editor/cn/76-MinimumWindowSubstring.cpp)
 add_executable(49-GroupAnagrams editor/cn/49-GroupAnagrams.cpp)
+add_executable(59-SpiralMatrixII editor/cn/59-SpiralMatrixII.cpp)

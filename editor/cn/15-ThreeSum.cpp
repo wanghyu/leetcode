@@ -51,7 +51,55 @@
 class Solution {
 public:
     vector<vector<int>> threeSum(vector<int>& nums) {
+        vector<vector<int>> res;
+        sort(nums.begin(), nums.end());
 
+        for(int i = 0; i < nums.size(); i++) {
+            if(nums[i] > 0) return res;
+            if(i > 0 && nums[i] == nums[i-1]) continue;
+
+            int left = i + 1;
+            int right = nums.size()-1;
+            while(left < right) {
+                if(nums[i] + nums[left] + nums[right] > 0) right--;
+                else if(nums[i] + nums[left] + nums[right] < 0) left++;
+                else {
+                    res.push_back({nums[i], nums[left], nums[right]});
+                    while(left < right && nums[left+1] == nums[left]) {
+                        left++;
+                    }
+                    while(left < right && nums[right-1] == nums[right]) {
+                        right--;
+                    }
+
+                    left++;
+                    right--;
+                }
+            }
+        }
+        return res;
+    }
+
+    //下面是不对的，没有去重
+    vector<vector<int>> threeSum2(vector<int>& nums) {
+        vector<vector<int>> res;
+        unordered_map<int, int> uMap;
+
+        for(int i = 0; i < nums.size(); i++) {
+            uMap[nums[i]] = i;
+        }
+
+        //要去重! 很难搞？
+        unordered_map<int, pair<int, int>> uMap1;
+        for(int i = 0; i < nums.size(); i++) {
+            for(int j = i; j < nums.size(); j++) {
+                auto it = uMap.find(0 - nums[i] - nums[j]);
+                if(it != uMap.end() && it->second != i && it->second != j) {
+                    res.push_back({nums[i], nums[j], it->first});
+                }
+            }
+        }
+        return res;
     }
 };
 //leetcode submit region end(Prohibit modification and deletion)
